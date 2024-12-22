@@ -12,9 +12,13 @@
         <li class="nav-item">
             <a class="nav-link active" href="/Payments">Pajamų analizė</a>
         </li>
-        <li>
-            <a class="nav-link active" href="/Coupons">Kuponai</a>
-        </li>
+        @if ((bool)Session["IsAdmin"])
+			{
+            <li>
+                <a class="nav-link active" href="/Coupons">Kuponai</a>
+            </li>
+
+			}
         <li>
             <a class="nav-link active" href="/Orders">Užsakymas</a>
         </li>
@@ -111,9 +115,9 @@ else
 {
     <div class="card">
         <div class="card-body">
-            <h3>Discount Coupons</h3>
-            <p>You don't have any active discount coupons.</p>
-            <p>Make a purchase to earn a discount coupon!</p>
+            <h3>Nuolaidų kuponai</h3>
+            <p>Jūs neturite aktyvių nuolaidos kuponų.</p>
+            <p>Apsipirkite parduotuvėje, kad gautumėte nuolaidų.</p>
         </div>
     </div>
 }

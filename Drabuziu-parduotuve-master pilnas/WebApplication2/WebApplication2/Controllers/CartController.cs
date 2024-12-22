@@ -38,6 +38,7 @@ namespace WebApplication2.Controllers
 
                     if (coupon != null)
                     {
+                        bool anyItemDiscounted = false;
                         foreach (var item in cart)
                         {
                             var couponProduct = coupon.CouponProducts
@@ -47,9 +48,16 @@ namespace WebApplication2.Controllers
                                 (!couponProduct.MinQuantity.HasValue || item.Quantity >= couponProduct.MinQuantity.Value))
                             {
                                 item.Price = item.OriginalPrice * (1 - (float)(coupon.Verte / 100));
+                                anyItemDiscounted = true;
                             }
                         }
-                        ViewBag.CouponMessage = "Nuolaida pritaikyta";
+                        if (anyItemDiscounted)
+							ViewBag.CouponMessage = "Nuolaida pritaikyta";
+                        else
+						{
+                            ViewBag.CouponMessage = "Šis nuolaidos kodas netinka nė vienai iš jūsų krepšelyje esančių prekių";
+                            Session[CouponSessionKey] = null;
+						}
                     }
                     else
                     {
