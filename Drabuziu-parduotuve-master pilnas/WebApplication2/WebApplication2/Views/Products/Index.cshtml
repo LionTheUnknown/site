@@ -1,0 +1,75 @@
+﻿    @model IEnumerable<WebApplication2.Models.Product>
+
+@{
+    ViewBag.Title = "Produktai";
+}
+
+<h2>Produktai</h2>
+
+<p>
+    @Html.ActionLink("Naujas", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Id
+        </th>
+        <th>
+            Pavadinimas
+        </th>
+        <th>
+            Aprašas
+        </th>
+        <th>
+            Kaina
+        </th>
+        <th>
+            Nuotrauka
+        </th>
+        <th>
+            Kiekis
+        </th>
+        <th>
+            Masė
+        </th>
+        <th>
+            Pardavėjas
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+        <td>
+            @String.Format("{0:0.00} €", item.price)
+        </td>
+        <td>
+            <img style="max-width:50px;" src="@item.imageURL">
+        </td>
+        <td>
+            @item.getAmount()
+        </td>
+        <td>
+            @item.mass
+        </td>
+        <td>
+            @item.seller
+        </td>
+        <td>
+            @Html.ActionLink("Redaguoti", "Edit", new { id = item.id }) |
+            @Html.ActionLink("Peržiūra", "Details", new { id = item.id }) |
+            @Html.ActionLink("Šalinti", "Delete", new { id = item.id })
+        </td>
+    </tr>
+}
+
+</table>

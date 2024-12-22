@@ -1,0 +1,145 @@
+﻿@model List<WebApplication2.Models.CartItem>
+
+@{
+    ViewBag.Title = "Krepšelis";
+}
+
+<h2>Krepšelis</h2>
+@if (ViewBag.CouponMessage != null)
+{
+    <div class="alert @(ViewBag.CouponMessage.Contains("Nuolaida") ? "alert-success" : "alert-danger")">
+        @ViewBag.CouponMessage
+    </div>
+}
+<div class="row mb-3">
+    <div class="col-md-6">
+        @using (Html.BeginForm("ApplyCoupon", "Cart", FormMethod.Post))
+        {
+            <div class="input-group">
+                <input type="text" name="couponCode" class="form-control" placeholder="Įveskite nuolaidos kodą">
+                <button type="submit" class="btn btn-primary">Pritaikyti nuolaidą</button>
+            </div>
+        }
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Prekė</th>
+            <th>Kaina</th>
+            <th>Kiekis</th>
+            <th>Bendra suma</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>
+                        @if (item.Price < item.OriginalPrice)
+                        {
+                            <span style="text-decoration: line-through; color: #999;">
+                                @String.Format("{0:0.00} €", item.OriginalPrice)
+                            </span>
+                            <span style="color: #d9534f; margin-left: 5px;">
+                                @String.Format("{0:0.00} €", item.Price)
+                            </span>
+                        }
+                        else
+                        {
+                            @String.Format("{0:0.00} €", item.Price)
+                        }
+                    </td>
+                    <td>@item.Quantity</td>
+                    <td>@String.Format("{0:0.00} €", item.Price * item.Quantity)</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4" class="text-center">Krepšelis tuščias</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (Model != null && Model.Any())
+{
+    var userId = Session["UserId"];
+    if (userId != null)
+    {
+        <form action="@Url.Action("Checkout", "Cart")" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <label for="paymentType">Pasirinkite apmokėjimo būdą:</label>
+                <select id="paymentType" name="paymentType" class="form-control" onchange="togglePaymentFields()">
+                    <option value="kortele">Kortele</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="parduotuves_kreditas">Parduotuvės kreditais</option>
+                </select>
+            </div>
+
+            <div id="cardFields" style="display: none;">
+                <h4>Kortelės informacija</h4>
+                <div class="form-group">
+                    <label for="cardNumber">Kortelės numeris:</label>
+                    <input type="text" id="cardNumber" name="cardNumber" class="form-control" placeholder="Kortelės numeris" aria-label="Kortelės numeris">
+                </div>
+                <div class="form-group">
+                    <label for="expiryDate">Galiojimo data:</label>
+                    <input type="month" id="expiryDate" name="expiryDate" class="form-control" aria-label="Kortelės galiojimo data">
+                </div>
+                <div class="form-group">
+                    <label for="cvv">CVV:</label>
+                    <input type="text" id="cvv" name="cvv" class="form-control" placeholder="CVV" aria-label="Kortelės CVV">
+                </div>
+            </div>
+
+            <div id="paypalFields" style="display: none;">
+                <h4>PayPal Informacija</h4>
+                <div class="form-group">
+                    <label for="paypalEmail">PayPal el. paštas:</label>
+                    <input type="email" id="paypalEmail" name="paypalEmail" class="form-control" placeholder="PayPal el. paštas" aria-label="PayPal el. paštas">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="storeCredit">Naudoti parduotuvės kreditą:</label>
+                <input type="range" id="storeCredit" name="storeCredit" min="0" max="@(Model != null && Model.Any() ? Model.Sum(c => c.Price * c.Quantity) : 0)" value="0" step="1" class="form-control" oninput="updateStoreCreditDisplay()">
+                <p>Naudoti <span id="storeCreditAmount">0</span> € iš parduotuvės kredito.</p>
+            </div>
+
+            <button type="submit" class="btn btn-success">Patvirtinti užsakymą</button>
+        </form>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            <p>Prašome prisijungti, kad galėtumėte atlikti apmokėjimą ir užbaigti užsakymą.</p>
+        </div>
+    }
+}
+
+<script>
+    function togglePaymentFields() {
+        var paymentType = document.getElementById("paymentType").value;
+
+        document.getElementById("cardFields").style.display = paymentType === "kortele" ? "block" : "none";
+        document.getElementById("paypalFields").style.display = paymentType === "paypal" ? "block" : "none";
+    }
+
+    function updateStoreCreditDisplay() {
+        var storeCredit = document.getElementById("storeCredit").value;
+        document.getElementById("storeCreditAmount").innerText = storeCredit;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        togglePaymentFields();
+        updateStoreCreditDisplay();
+    });
+</script>

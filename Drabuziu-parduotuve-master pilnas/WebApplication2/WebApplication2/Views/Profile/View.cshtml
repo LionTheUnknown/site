@@ -1,0 +1,119 @@
+﻿@model WebApplication2.Models.Users
+
+
+<div class="navbar navbar-inverse">
+    <ul class="nav navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link active" href="/Products">Produktai</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/Categories">Kategorijos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/Payments">Pajamų analizė</a>
+        </li>
+        <li>
+            <a class="nav-link active" href="/Coupons">Kuponai</a>
+        </li>
+        <li>
+            <a class="nav-link active" href="/Orders">Užsakymas</a>
+        </li>
+        <li>
+            <a class="nav-link active" href="/Warehouses">Sandeliai</a>
+        </li>
+        <li>
+            <a class="nav-link active" href="/Salaries">Atlyginimai</a>
+        </li>
+    </ul>
+</div>
+
+<h2>Jūsų profilis</h2>
+<div class="card mb-4">
+    <div class="card-body">
+        <p><strong>Vardas:</strong> @Model.FirstName</p>
+        <p><strong>Pavardė:</strong> @Model.LastName</p>
+        <p><strong>Tel. nr:</strong> @Model.PhoneNumber</p>
+        <a href="@Url.Action("Index", "Edit")" class="btn btn-primary">Redaguoti profilį</a>
+        @if (ViewBag.ShowRoleSelection != null && (bool)ViewBag.ShowRoleSelection)
+        {
+            <div>
+                <h4>Select your role:</h4>
+                @using (Html.BeginForm("SelectRole", "Profile", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <label for="role">Choose a role:</label>
+                    <select id="role" name="role" class="form-control">
+                        <option value="Buyer">Buyer</option>
+                        <option value="Seller">Seller</option>
+                    </select>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                }
+            </div>
+        }
+        else
+        {
+            <p>You have already selected your role.</p>
+
+            if (ViewBag.IsBuyer)
+            {
+                <p>You are a Buyer.</p>
+            }
+            else if (ViewBag.IsSeller)
+            {
+                <p>You are a Seller.</p>
+            }
+        }
+
+    </div>
+</div>
+
+@if (ViewBag.Coupon != null)
+{
+    var coupon = ViewBag.Coupon;
+    <div class="card">
+        <div class="card-body">
+            <h3>Jūsų nuolaidų kuponas</h3>
+            <div class="alert alert-info">
+                <p><strong>Kodas:</strong> <span class="font-monospace">@coupon.Kodas</span></p>
+                <p><strong>Vertė:</strong> @coupon.Verte%</p>
+                @if (coupon.Galiojimo_pabaigos_data != null)
+                {
+                    <p><strong>Galioja iki:</strong> @coupon.Galiojimo_pabaigos_data</p>
+                }
+                @if (!string.IsNullOrEmpty(coupon.Aprasymas))
+                {
+                    <p><strong>Aprašymas:</strong> @coupon.Aprasymas</p>
+                }
+
+                @if (coupon.CouponProducts != null && coupon.CouponProducts.Count > 0)
+                {
+                    <p><strong>Galioja prekėms:</strong></p>
+                    <ul>
+                        @foreach (var c in coupon.CouponProducts)
+                        {
+                            <li>
+                                @c.Product.name
+                                @if (c.MinQuantity != null)
+                                {
+                                    <span>(Minimalus prekių skaičius: @c.MinQuantity)</span>
+                                }
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="card">
+        <div class="card-body">
+            <h3>Discount Coupons</h3>
+            <p>You don't have any active discount coupons.</p>
+            <p>Make a purchase to earn a discount coupon!</p>
+        </div>
+    </div>
+}

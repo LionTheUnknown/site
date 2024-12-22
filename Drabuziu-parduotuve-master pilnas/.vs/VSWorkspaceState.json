@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\WebApplication2",
+    "\\WebApplication2\\WebApplication2",
+    "\\WebApplication2\\WebApplication2\\Controllers",
+    "\\WebApplication2\\WebApplication2\\Models",
+    "\\WebApplication2\\WebApplication2\\Views",
+    "\\WebApplication2\\WebApplication2\\Views\\Profile"
+  ],
+  "SelectedNode": "\\WebApplication2\\WebApplication2\\Controllers\\AuthenticationController.cs",
+  "PreviewInSolutionExplorer": false
+}

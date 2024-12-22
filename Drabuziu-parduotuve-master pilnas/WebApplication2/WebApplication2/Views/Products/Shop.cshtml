@@ -1,0 +1,129 @@
+﻿
+@{
+    ViewBag.Title = "Parduotuvė";
+}
+
+<h2>Parduotuvė</h2>
+
+   <style>
+       .d-none {
+           display: none;
+       }
+       .price-range{
+           max-width:49%;
+           display:inline-block;
+       }
+       .product-card {
+           margin-top: 20px;
+           margin-bottom: 20px;
+           text-align: center;
+       }
+    </style>
+
+    <div class="container my-5">
+        <div class="row">
+            <button id="filter-toggle" class="btn btn-secondary my-5">Filtravimo langas</button>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div id="filter" class="d-none">
+
+                    <div class="col-md-3">
+                        Kategorijos
+                        @foreach (var category in ViewBag.Categories as IEnumerable<WebApplication2.Models.Category>)
+                        {
+                            bool isSelected = (ViewBag.filter_categories as IEnumerable<int>).Contains(category.id);
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="filter_categories[]" value="@category.id" id="category_@category.id" @(isSelected ? "checked" : "")>
+
+                                <label class="form-check-label" for="category_@category.id">
+                                    @category.name
+                                </label>
+                            </div>
+
+                        }
+                    </div>
+                    <div class="col-md-3">
+                        <label>Pavadinimas</label>
+                        <input class="form-control" type="text" name="filter_text_name" id="filter_text_name"
+                               @(ViewBag.filter_text_name != null ? $"value={ViewBag.filter_text_name}" : "")>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Kaina</label>
+                        @{
+                            float? filter_text_price_from = ViewBag.filter_text_price_from;
+                            float? filter_text_price_to = ViewBag.filter_text_price_to;
+                        }
+                        <div>
+                            <input class="form-control price-range" type="text" name="filter_text_price_from" placeholder="nuo" id="filter_text_price_from"
+                                   @(filter_text_price_from != null ? $"value={filter_text_price_from}" : "")>
+                            <input class="form-control price-range" type="text" name="filter_text_price_to" placeholder="iki" id="filter_text_price_to"
+                                   @(filter_text_price_to != null ? $"value={filter_text_price_to}" : "")>
+                        </div>
+                        <select class="form-control d-none" name="filter_values_price">
+                                <option value="0"></option>
+                                <option value="1">iki 20 eur</option>
+                                <option value="2">nuo 20 iki 40 eur</option>
+                                <option value="3">iki 50 eur</option>
+                            </select>
+                        </div>
+                    <div class="col-md-3">
+                        <label>Gamintojas</label>
+                        <input class="form-control d-none" type="text" name="filter_text_manufacturer" id="filter_text_manufacturer" >
+                        @foreach (var manufacturer in ViewBag.manufacturers)
+                        {
+                            bool isSelected = false;
+                            if (ViewBag.filter_values_manufacturer != null)
+                            {
+                                foreach( string mann in ViewBag.filter_values_manufacturer as IEnumerable<string>)
+                                {
+                                    if (mann.Equals(manufacturer))
+                                    {
+                                        isSelected = true;
+                                    }
+                                }
+
+                            }
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="filter_values_manufacturer[]" value="@manufacturer" id="filter_values_manufacturer" @(isSelected ? "checked" : "")>
+
+                                <label class="form-check-label" for="">
+                                    @manufacturer
+                                </label>
+                            </div>
+
+                        }
+                    </div>
+                    <input type="submit" style="display:block;margin:auto" value="Filtruoti" class="btn btn-default" />
+                </div>
+                <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+                        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+                        crossorigin="anonymous"></script>
+                <script>
+                    $("#filter-toggle").on("click", function () {
+                        $("#filter").toggleClass("d-none");
+                    });
+                </script>
+
+            }
+            @foreach (var item in ViewBag.Products as IEnumerable<WebApplication2.Models.Product>)
+            {
+                <!-- Product 1 -->
+                <div class="col-md-4">
+                    <div class="card product-card">
+                        <img src="@item.imageURL" class="card-img-top m-auto" style="max-height:200px;max-width:333px" alt="Produkto nuotrauka">
+                        <div class="card-body">
+                            <a href="/Products/Details/@item.id"><h5 class="card-title"> @Html.DisplayFor(modelItem => item.name)</h5></a>
+                            <p class="card-text"><strong>@String.Format("{0:0.00} €", item.price)</strong></p>
+                            <form action="@Url.Action("AddToCart", "Cart")" method="post">
+                                <input type="hidden" name="id" value="@item.id" />
+                                <input type="hidden" name="name" value="@item.name" />
+                                <input type="hidden" name="price" value="@item.price" />
+                                <button type="submit" class="btn btn-primary">Į krepšelį</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>

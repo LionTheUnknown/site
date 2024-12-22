@@ -1,0 +1,81 @@
+﻿@model IEnumerable<WebApplication2.Models.Coupon>
+
+@{
+    ViewBag.Title = "Kuponai";
+}
+
+<h2>Kuponai</h2>
+
+<p>
+    @Html.ActionLink("Sukurti naują", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Sukurimo_data)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Veikimo_pradzios_data)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Panaudojimu_sk)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Kodas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Verte)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Aprasymas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pavadinimas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Galiojimo_pabaigos_data)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Yra_ribotas)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sukurimo_data)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Veikimo_pradzios_data)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Panaudojimu_sk)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Kodas)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Verte)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Aprasymas)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pavadinimas)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Galiojimo_pabaigos_data)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Yra_ribotas)
+        </td>
+        <td>
+            @Html.ActionLink("Redaguoti", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Detalės", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Šalinti", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

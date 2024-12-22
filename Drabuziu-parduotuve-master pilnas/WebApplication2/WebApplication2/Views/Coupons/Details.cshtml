@@ -1,0 +1,90 @@
+﻿@model WebApplication2.Models.Coupon
+
+@{
+    ViewBag.Title = "Detalės";
+}
+
+<h2>Detalės</h2>
+
+<div>
+    <h4>Coupon</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Sukurimo_data)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sukurimo_data)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Veikimo_pradzios_data)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Veikimo_pradzios_data)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Panaudojimu_sk)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Panaudojimu_sk)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Kodas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kodas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Verte)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Verte)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Aprasymas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Aprasymas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pavadinimas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pavadinimas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Galiojimo_pabaigos_data)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Galiojimo_pabaigos_data)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Yra_ribotas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Yra_ribotas)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Redaguoti", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Atgal", "Index")
+</p>

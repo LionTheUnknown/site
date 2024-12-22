@@ -1,0 +1,156 @@
+﻿@model IEnumerable<WebApplication2.Models.Payment>
+
+@{
+    ViewBag.Title = "Pajamų Analizė";
+}
+
+<h2>Pelno ir išlaidų analizė</h2>
+
+<div class="charts-container">
+    <!-- Chart 1: Pelnas prieš išlaidas -->
+    <div class="chart">
+        <h3>Pelnas ir išlaidas</h3>
+        <canvas id="profitExpenseChart"></canvas>
+    </div>
+    <!-- Chart 2: Pajamos prieš savikainą -->
+    <div class="chart">
+        <h3>Pajamos ir savikaina</h3>
+        <canvas id="revenueCOGSChart"></canvas>
+    </div>
+    <!-- Chart 3: Geriausiai parduodamos drabužių kategorijos -->
+    <div class="chart">
+        <h3>Geriausiai parduodamos drabužių kategorijos</h3>
+        <canvas id="topClothesChart"></canvas>
+    </div>
+    <!-- Chart 4: Top 5 dažniausiai perkamų drabužių -->
+    <div class="chart">
+        <h3>Dažniausiai perkami drabužiai</h3>
+        <canvas id="topClothesPodiumChart"></canvas>
+    </div>
+</div>
+
+<script>
+    // Store the chart instances globally
+    var profitExpenseChart, revenueCOGSChart, topClothesChart, topClothesPodiumChart;
+
+        // Pie Chart 1: Pelnas prieš išlaidas
+        var ctx1 = document.getElementById('profitExpenseChart').getContext('2d');
+        profitExpenseChart = new Chart(ctx1, {
+            type: 'pie',
+            data: {
+                labels: ['Grynasis pelnas', 'Bendros išlaidos'],
+                datasets: [{
+                    label: 'Pelnas ir išlaidas',
+                    data: [@ViewBag.TotalRevenue, @ViewBag.TotalExpenses],
+                    backgroundColor: ['#36A2EB', '#FF5733'],
+                }]
+            }
+        });
+
+        // Pie Chart 2: Pajamos prieš savikainą
+        var ctx2 = document.getElementById('revenueCOGSChart').getContext('2d');
+        revenueCOGSChart = new Chart(ctx2, {
+            type: 'pie',
+            data: {
+                labels: ['Bendros pajamos', 'Savikaina (COGS)'],
+                datasets: [{
+                    label: 'Pajamos prieš savikainą',
+                    data: [@ViewBag.TotalRevenue, @ViewBag.TotalExpenses],
+                    backgroundColor: ['#FFB74D', '#FF7043'],
+                }]
+            }
+        });
+
+        // Bar Chart 3: Geriausiai parduodamos drabužių kategorijos
+        var ctx3 = document.getElementById('topClothesChart').getContext('2d');
+        topClothesChart = new Chart(ctx3, {
+            type: 'bar',
+            data: {
+                labels: @Html.Raw(Json.Encode(ViewBag.TopClothesCategories)),
+                datasets: [{
+                    label: 'Geriausiai parduodamos drabužių kategorijos',
+                    data: @Html.Raw(Json.Encode(ViewBag.TopCategoriesSold)),
+                    backgroundColor: '#42A5F5',
+                    borderColor: '#1E88E5',
+                    borderWidth: 1
+                }]
+            }
+        });
+
+        // Bar Chart 4: Dažniausiai perkami drabužiai (Top 5)
+        var ctx4 = document.getElementById('topClothesPodiumChart').getContext('2d');
+        topClothesPodiumChart = new Chart(ctx4, {
+            type: 'bar',
+            data: {
+                labels: @Html.Raw(Json.Encode(ViewBag.TopClothesNames)),
+                datasets: [{
+                    label: 'Dažniausiai perkami drabužiai',
+                    data: @Html.Raw(Json.Encode(ViewBag.TopClothesSold)),
+                    backgroundColor: ['#FF5733', '#FF8D1A', '#FFB84D', '#FFD700', '#C4E138'],
+                    borderColor: '#F5F5F5',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: Math.max(...@Html.Raw(Json.Encode(ViewBag.TopClothesSold))) + 1
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+
+
+</script>
+
+<style>
+    .charts-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between; /* Space out the charts */
+        align-items: flex-start; /* Align them to the top */
+        gap: 20px;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    .chart {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 48%; /* Ensures charts take up about half the space each */
+        min-width: 400px; /* Keeps the chart from becoming too small on narrow screens */
+        height: auto;
+        border: 2px solid #ddd; /* Add border */
+        border-radius: 8px; /* Rounded corners */
+        padding: 20px;
+        background-color: #f9f9f9; /* Light background */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+    }
+
+    h2 {
+        text-align: center;
+        margin-top: 70px;
+    }
+
+    h3 {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+</style>

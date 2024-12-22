@@ -1,0 +1,75 @@
+﻿@model WebApplication2.Models.Warehouse
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Warehouse Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.place)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.place)
+        </dd>
+    </dl>
+</div>
+
+<h4>Products in Warehouse</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Mass</th>
+            <th>Count</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.WarehouseProducts != null && Model.WarehouseProducts.Any())
+        {
+            foreach (var wp in Model.WarehouseProducts)
+            {
+                <tr>
+                    <td>@wp.Product.name</td>
+                    <td>@wp.Product.description</td>
+                    <td>@wp.Product.price</td>
+                    <td>@wp.Product.mass</td>
+                    <td>@wp.Count</td>
+                    <td>
+                        @Html.ActionLink("Edit Count", "EditProductCount", new { warehouseId = wp.WarehouseId, productId = wp.ProductId }, new { @class = "btn btn-sm btn-warning" })
+                        @Html.ActionLink("Remove", "RemoveProduct", new { warehouseId = wp.WarehouseId, productId = wp.ProductId }, new { @class = "btn btn-sm btn-danger" })
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6">No products assigned to this warehouse.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    @Html.ActionLink("Add Existing Product", "AddExistingProduct", new { id = Model.id }, new { @class = "btn btn-primary" })
+</p>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }, new { @class = "btn btn-secondary" }) |
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+</p>

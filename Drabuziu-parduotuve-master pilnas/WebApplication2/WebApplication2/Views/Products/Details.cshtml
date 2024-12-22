@@ -1,0 +1,48 @@
+﻿@model WebApplication2.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>@Model.name</h2>
+
+<div class="row">
+        <div class="col-md-6">
+        <img style="max-width:500px;"src="@Model.imageURL"/>
+         </div>
+        <div class="col-md-6">
+            <dt>
+                Kaina:
+                @String.Format("{0:0.00} €", Model.price)
+            </dt>
+            <div>
+                Liko:
+                @Model.getAmount()
+            </div>
+            <div>
+                Masė:
+                @Model.mass g
+            </div>
+
+            <div>
+                Gaminotojas:
+                @Model.manufacturer
+            </div>
+            <div>Aprašas:</div>
+            <p>@Model.description</p>
+            <div>Kategorijos:</div>
+            @foreach (var category in Model.ProductCategories)
+            {
+                <div>
+                    @category.Category.name
+                </div>
+            }
+                <form action="@Url.Action("AddToCart", "Cart")" method="post">
+                    <input type="hidden" name="id" value="@Model.id" />
+                    <input type="hidden" name="name" value="@Model.name" />
+                    <input type="hidden" name="price" value="@Model.price" />
+                    <button type="submit" class="btn btn-primary">Į krepšelį</button>
+                </form>
+        </div>
+
+</div>

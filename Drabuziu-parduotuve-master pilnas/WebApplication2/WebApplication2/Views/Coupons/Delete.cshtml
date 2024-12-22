@@ -1,0 +1,96 @@
+﻿@model WebApplication2.Models.Coupon
+
+@{
+    ViewBag.Title = "Šalinimas";
+}
+
+<h2>Šalinimas</h2>
+
+<h3>Ar tikrai norite pašalinti šį kuponą</h3>
+<div>
+    <h4>Kuponas</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Sukurimo_data)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sukurimo_data)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Veikimo_pradzios_data)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Veikimo_pradzios_data)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Panaudojimu_sk)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Panaudojimu_sk)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Kodas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kodas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Verte)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Verte)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Aprasymas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Aprasymas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pavadinimas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pavadinimas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Galiojimo_pabaigos_data)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Galiojimo_pabaigos_data)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Yra_ribotas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Yra_ribotas)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Šalinti" class="btn btn-default" /> |
+            @Html.ActionLink("Atgal", "Index")
+        </div>
+    }
+</div>
