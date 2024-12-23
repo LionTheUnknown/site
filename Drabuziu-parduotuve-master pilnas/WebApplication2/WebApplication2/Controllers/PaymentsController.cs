@@ -190,7 +190,7 @@ namespace WebApplication2.Controllers
             int lineSpacing = 20; // Space between lines
 
             // Draw the content on the page
-            gfx.DrawString("Sąskaita", headerFont, XBrushes.Black, new XPoint(260, topMargin)); // Title
+            gfx.DrawString("Pirkinio kvitas", headerFont, XBrushes.Black, new XPoint(240, topMargin)); // Title
 
             // Order details
             gfx.DrawString($"Užsakymo nr.: {receiptData.OrderId}", font, XBrushes.Black, new XPoint(leftMargin, topMargin + lineSpacing * 2));

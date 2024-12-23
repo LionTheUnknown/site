@@ -1,38 +1,24 @@
 ﻿    @model IEnumerable<WebApplication2.Models.Order>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Užsakymai";
 }
 
-<h2>Index</h2>
+<h2>Užsakymai</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Sukurti naują", "Create")
 </p>
 <table class="table" style="width: 1600px !important;">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.location)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.itemCount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.cost)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.start)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.end)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.buyerId)
-        </th>
-        <th></th>
+        <th>Vieta</th>
+        <th>Prekių kiekis</th>
+        <th>Kaina (€)</th>
+        <th>Pradžia</th>
+        <th>Pabaiga</th>
+        <th>Statusas</th>
+        <th>Pirkėjo ID</th>
+        <th>Veiksmai</th>
     </tr>
 
 @foreach (var item in Model) {

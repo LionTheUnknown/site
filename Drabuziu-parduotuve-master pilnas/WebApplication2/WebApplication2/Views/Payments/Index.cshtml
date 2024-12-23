@@ -7,22 +7,18 @@
 <h2>Pelno ir išlaidų analizė</h2>
 
 <div class="charts-container">
-    <!-- Chart 1: Pelnas prieš išlaidas -->
     <div class="chart">
         <h3>Pelnas ir išlaidas</h3>
         <canvas id="profitExpenseChart"></canvas>
     </div>
-    <!-- Chart 2: Pajamos prieš savikainą -->
     <div class="chart">
         <h3>Pajamos ir savikaina</h3>
         <canvas id="revenueCOGSChart"></canvas>
     </div>
-    <!-- Chart 3: Geriausiai parduodamos drabužių kategorijos -->
     <div class="chart">
         <h3>Geriausiai parduodamos drabužių kategorijos</h3>
         <canvas id="topClothesChart"></canvas>
     </div>
-    <!-- Chart 4: Top 5 dažniausiai perkamų drabužių -->
     <div class="chart">
         <h3>Dažniausiai perkami drabužiai</h3>
         <canvas id="topClothesPodiumChart"></canvas>
@@ -30,10 +26,8 @@
 </div>
 
 <script>
-    // Store the chart instances globally
     var profitExpenseChart, revenueCOGSChart, topClothesChart, topClothesPodiumChart;
 
-        // Pie Chart 1: Pelnas prieš išlaidas
         var ctx1 = document.getElementById('profitExpenseChart').getContext('2d');
         profitExpenseChart = new Chart(ctx1, {
             type: 'pie',
@@ -47,7 +41,6 @@
             }
         });
 
-        // Pie Chart 2: Pajamos prieš savikainą
         var ctx2 = document.getElementById('revenueCOGSChart').getContext('2d');
         revenueCOGSChart = new Chart(ctx2, {
             type: 'pie',
@@ -61,7 +54,6 @@
             }
         });
 
-        // Bar Chart 3: Geriausiai parduodamos drabužių kategorijos
         var ctx3 = document.getElementById('topClothesChart').getContext('2d');
         topClothesChart = new Chart(ctx3, {
             type: 'bar',
@@ -77,7 +69,6 @@
             }
         });
 
-        // Bar Chart 4: Dažniausiai perkami drabužiai (Top 5)
         var ctx4 = document.getElementById('topClothesPodiumChart').getContext('2d');
         topClothesPodiumChart = new Chart(ctx4, {
             type: 'bar',
@@ -115,10 +106,9 @@
     .charts-container {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between; /* Space out the charts */
-        align-items: flex-start; /* Align them to the top */
+        align-items: flex-start;
         gap: 20px;
-        padding: 10px;
+        padding: 20px;
         box-sizing: border-box;
     }
 
@@ -127,25 +117,24 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 48%; /* Ensures charts take up about half the space each */
-        min-width: 400px; /* Keeps the chart from becoming too small on narrow screens */
+        width: 48%; 
+        min-width: 400px; 
         height: auto;
-        border: 2px solid #ddd; /* Add border */
-        border-radius: 8px; /* Rounded corners */
+        border: 2px solid #ddd; 
+        border-radius: 8px; 
         padding: 20px;
-        background-color: #f9f9f9; /* Light background */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+        
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     }
 
     body {
         margin: 0;
         padding: 0;
         font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
     }
 
     h2 {
-        text-align: center;
+        text-align: left;
         margin-top: 70px;
     }
 

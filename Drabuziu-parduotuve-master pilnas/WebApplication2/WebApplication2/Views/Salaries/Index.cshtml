@@ -1,19 +1,18 @@
 ﻿@model IEnumerable<WebApplication2.Models.Salary>
 
 @{
-    ViewBag.Title = "Assign Bonus";
+    ViewBag.Title = "Apmokėti atlyginimus";
 }
 
-<h2>Assign Bonus</h2>
+<h2>Apmokėti atlyginimus</h2>
 
 <form action="@Url.Action("Payout", "Salaries")" method="post">
     @Html.AntiForgeryToken()
 
-    <!-- Dropdown to select admin -->
     <div class="form-group">
-        <label for="adminId">Select Admin:</label>
+        <label for="adminId">Pasirinkti administratorių:</label>
         <select id="adminId" name="adminId" class="form-control" required onchange="updateFormFields()">
-            <option value="">-- Select Admin --</option>
+            <option value="">-- Administratorių sąrašas --</option>
             @if (ViewBag.Administrators != null)
             {
                 foreach (var admin in ViewBag.Administrators)
@@ -28,47 +27,38 @@
         </select>
     </div>
 
-    <!-- Display the salary of the selected admin -->
     <div class="form-group">
-        <label>Current Salary:</label>
-        <p id="currentSalary">Select an admin to see their salary.</p>
+        <label>Dabartinė alga:</label>
+        <p id="currentSalary">Pasirinkite administratorių, kad pamatytumėte jo algą.</p>
     </div>
 
-    <!-- Admin Name -->
     <input type="hidden" id="adminName" name="adminName" />
 
-    <!-- Admin Salary -->
     <input type="hidden" id="adminSalary" name="adminSalary" />
 
-    <!-- Bonus input -->
     <div class="form-group">
-        <label for="bonus">Bonus:</label>
+        <label for="bonus">Priskiriamas bonusas:</label>
         <input type="number" id="bonus" name="bonus" class="form-control" step="0.01" required />
     </div>
 
-    <button type="submit" class="btn btn-primary">Assign Bonus</button>
+    <button type="submit" class="btn btn-primary">Apmokėti algą</button>
 </form>
-
-<a href="@Url.Action("Index", "Salaries")" class="btn btn-secondary mt-3">Back to Employee List</a>
 
 <script>
     function updateFormFields() {
         const dropdown = document.getElementById("adminId");
         const selectedOption = dropdown.options[dropdown.selectedIndex];
 
-        // Extract data attributes
         const name = selectedOption.getAttribute("data-name");
         const salary = selectedOption.getAttribute("data-salary");
 
-        // Update display
         const salaryText = document.getElementById("currentSalary");
         if (salary) {
-            salaryText.textContent = `Current Salary: $${parseFloat(salary).toFixed(2)}`;
+            salaryText.textContent = `Dabartinė alga: $${parseFloat(salary).toFixed(2)}`;
         } else {
-            salaryText.textContent = "Select an admin to see their salary.";
+            salaryText.textContent = "Pasirinkite administratorių, kad pamatytumėte jo algą.";
         }
 
-        // Update hidden inputs
         document.getElementById("adminName").value = name || "";
         document.getElementById("adminSalary").value = salary || "";
     }

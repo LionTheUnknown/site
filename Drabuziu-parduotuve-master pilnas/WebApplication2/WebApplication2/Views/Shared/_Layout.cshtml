@@ -38,10 +38,10 @@
                         }
                         else // If user is logged in
                         {
-                            if (TempData["IsAdmin"] != null && (bool)TempData["IsAdmin"])
+                            if ((bool)Session["IsAdmin"] == true)
                             {
                                 <li>
-                                    @Html.ActionLink("Register Admin", "Register", "Authentication", new { area = "" }, new { @class = "btn btn-warning navbar-btn" })
+                                    @Html.ActionLink("Registruoti administratorių", "Register", "Authentication", new { area = "" }, new { @class = "" })
                                 </li>
                             }
                             <li>
