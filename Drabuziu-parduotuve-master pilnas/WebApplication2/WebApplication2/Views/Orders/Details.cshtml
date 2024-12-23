@@ -1,17 +1,17 @@
 ﻿@model WebApplication2.Models.Order
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Išsami informacija";
 }
 
-<h2>Details</h2>
+<h2>Išsami informacija</h2>
 
 <div>
-    <h4>Order</h4>
+    <h4>Užsakymas</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.location)
+            Vieta
         </dt>
 
         <dd>
@@ -19,7 +19,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.itemCount)
+            Prekių kiekis
         </dt>
 
         <dd>
@@ -27,7 +27,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.cost)
+            Kaina
         </dt>
 
         <dd>
@@ -35,7 +35,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.start)
+            Pradžios data
         </dt>
 
         <dd>
@@ -43,7 +43,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.end)
+            Pabaigos data
         </dt>
 
         <dd>
@@ -51,19 +51,23 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.buyerId)
+            Pirkėjo ID
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.buyerId)
         </dd>
-        <dd>
-            @Html.DisplayNameFor(model => model.status)
-        </dd>
 
+        <dt>
+            Statusas
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Redaguoti", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Grįžti į sąrašą", "Index")
 </p>

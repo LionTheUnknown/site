@@ -1,4 +1,4 @@
-﻿    @model IEnumerable<WebApplication2.Models.Order>
+﻿@model IEnumerable<WebApplication2.Models.Order>
 
 @{
     ViewBag.Title = "Užsakymai";
@@ -21,35 +21,36 @@
         <th>Veiksmai</th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.location)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.itemCount)
-        </td>
-        <td>
-            @String.Format("{0:0.00} €", item.cost)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.start)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.end)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.buyerId)
-        </td>
-        <td>
-            @Html.ActionLink("Keisti duomenis", "Edit", new { id = item.id }) |
-            @Html.ActionLink("Detaliau", "Details", new { id = item.id }) |
-            @Html.ActionLink("Atšaukti užsakymą", "Delete", new { id = item.id }) |
-            @Html.ActionLink("⬇️", "GenerateAndDownloadReceipt", "Payments", new { orderId = item.id }, null)
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.itemCount)
+            </td>
+            <td>
+                @String.Format("{0:0.00} €", item.cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.start)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.end)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.buyerId)
+            </td>
+            <td>
+                @Html.ActionLink("Keisti duomenis", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Detaliau", "Details", new { id = item.id }) |
+                @Html.ActionLink("Atšaukti užsakymą", "Delete", new { id = item.id }) |
+                @Html.ActionLink("⬇️", "GenerateAndDownloadReceipt", "Payments", new { orderId = item.id }, null)
+            </td>
+        </tr>
+    }
 </table>

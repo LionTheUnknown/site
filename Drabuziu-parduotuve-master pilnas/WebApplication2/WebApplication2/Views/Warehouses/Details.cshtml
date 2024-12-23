@@ -1,13 +1,13 @@
 ﻿@model WebApplication2.Models.Warehouse
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detales";
 }
 
-<h2>Details</h2>
+<h2>Detalesnė informacija</h2>
 
 <div>
-    <h4>Warehouse Details</h4>
+    <h4>Pasirinktas sandėlis</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -26,16 +26,15 @@
     </dl>
 </div>
 
-<h4>Products in Warehouse</h4>
+<h4>Prekės sandėlyje</h4>
 <table class="table">
     <thead>
         <tr>
-            <th>Product Name</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Mass</th>
-            <th>Count</th>
-            <th>Actions</th>
+            <th>Prekės pavadinimas</th>
+            <th>Aprašymas</th>
+            <th>Kaina</th>
+            <th>Svoris</th>
+            <th>Kiekis</th>
         </tr>
     </thead>
     <tbody>
@@ -49,27 +48,23 @@
                     <td>@wp.Product.price</td>
                     <td>@wp.Product.mass</td>
                     <td>@wp.Count</td>
-                    <td>
-                        @Html.ActionLink("Edit Count", "EditProductCount", new { warehouseId = wp.WarehouseId, productId = wp.ProductId }, new { @class = "btn btn-sm btn-warning" })
-                        @Html.ActionLink("Remove", "RemoveProduct", new { warehouseId = wp.WarehouseId, productId = wp.ProductId }, new { @class = "btn btn-sm btn-danger" })
-                    </td>
                 </tr>
             }
         }
         else
         {
             <tr>
-                <td colspan="6">No products assigned to this warehouse.</td>
+                <td colspan="6">Šiam sandėliui nepriskirta jokių prekių.</td>
             </tr>
         }
     </tbody>
 </table>
 
 <p>
-    @Html.ActionLink("Add Existing Product", "AddExistingProduct", new { id = Model.id }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Pridėti esamą prekę", "AddExistingProduct", new { id = Model.id }, new { @class = "btn btn-primary" })
 </p>
 
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id }, new { @class = "btn btn-secondary" }) |
-    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+    @Html.ActionLink("Redaguoti", "Edit", new { id = Model.id }, new { @class = "btn btn-secondary" }) |
+    @Html.ActionLink("Grįžti į sąrašą", "Index", null, new { @class = "btn btn-secondary" })
 </p>

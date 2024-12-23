@@ -21,7 +21,7 @@ namespace WebApplication2.Controllers
         {
             if (Session["UserId"] != null )
             {
-                bool admin = false;
+                bool admin = (bool)Session["isAdmin"];
                 List<Product> products;
                 if (admin) {
                     products = db.Products.ToList();
@@ -264,9 +264,11 @@ namespace WebApplication2.Controllers
             if (filter_text_name != null && filter_text_name.Length > 0)
             {
                 products_temp = new List<Product>();
+                var p_temp = db.Products.Where(p => p.name.Contains(filter_text_name)).ToList();
                 foreach (Product p in products)
                 {
-                    if (filter_text_name.Equals(p.name))
+                    //if (filter_text_name.Equals(p.name))
+                    if (p_temp.Contains(p))
                     {
                         products_temp.Add(p);
                     }

@@ -112,13 +112,22 @@ namespace WebApplication2.Controllers
 
                     // Pass admin status to the view
                     TempData["IsAdmin"] = ViewBag.IsAdmin;
-                    if (db.Administrators.Find(user.Id).Chief == true)
+                    if (db.Administrators.Find(user.Id) != null && db.Administrators.Find(user.Id).Chief == true)
                     {
                         Session["IsAdmin"] = true;
                     }
                     else
                     {
                         Session["IsAdmin"] = false;
+                    }
+
+                    if (db.Sellers.Find(user.Id) != null)
+                    {
+                        Session["IsSeller"] = true;
+                    }
+                    else
+                    {
+                        Session["IsSeller"] = false;
                     }
 
                     // Redirect to the home page

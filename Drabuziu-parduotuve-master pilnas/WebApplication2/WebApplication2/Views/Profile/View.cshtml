@@ -19,10 +19,19 @@
                 <a class="nav-link active" href="/Coupons">Kuponai</a>
             </li>
             <li>
-                <a class="nav-link active" href="/Warehouses">Sandeliai</a>
+                <a class="nav-link active" href="/Warehouses">Sandėliai</a>
             </li>
             <li>
                 <a class="nav-link active" href="/Salaries">Atlyginimai</a>
+            </li>
+        }
+        else if ((bool)Session["IsSeller"])
+        {
+            <li class="nav-item">
+                <a class="nav-link active" href="/Products">Produktai</a>
+            </li>
+            <li>
+                <a class="nav-link active" href="/Warehouses">Sandėliai</a>
             </li>
         }
         <li>

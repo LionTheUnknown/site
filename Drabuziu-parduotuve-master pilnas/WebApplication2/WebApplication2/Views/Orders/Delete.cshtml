@@ -1,14 +1,14 @@
 ﻿@model WebApplication2.Models.Order
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Ištrinti";
 }
 
-<h2>Delete</h2>
+<h2>Užsakymo atšaukimas</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Ar tikrai norite atšaukti šį užsakymą?</h3>
 <div>
-    <h4>Order</h4>
+    <h4>Užsakymas</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -49,73 +49,65 @@
         </dd>
     </dl>
 
-    <!-- Refund Payment Options -->
-    <h4>Refund Method</h4>
+    <h4>Mokesčio grąžinimo būdas</h4>
     <div class="form-group">
-        <label for="paymentType">Choose Payment Method:</label>
+        <label for="paymentType">Pasirinkite grąžinimo būdą:</label>
         <select id="paymentType" name="paymentType" class="form-control" onchange="togglePaymentFields()">
-            <option value="Credit Card">Credit Card</option>
+            <option value="Credit Card">Kredito kortelė</option>
             <option value="PayPal">PayPal</option>
-            <option value="Store Credit">Store Credit</option>
+            <option value="Store Credit">Parduotuvės kreditas</option>
         </select>
     </div>
 
-    <!-- Credit Card Details -->
     <div id="cardFields" style="display: none;">
-        <h4>Credit Card Information</h4>
+        <h4>Kredito kortelės informacija</h4>
         <div class="form-group">
-            <label for="cardNumber">Card Number:</label>
-            <input type="text" id="cardNumber" name="cardNumber" class="form-control" placeholder="Card Number" aria-label="Card Number">
+            <label for="cardNumber">Kortelės numeris:</label>
+            <input type="text" id="cardNumber" name="cardNumber" class="form-control" placeholder="Kortelės numeris" aria-label="Kortelės numeris">
             <span id="cardNumberError" style="color:red; display:none;">Įveskite galiojantį kortelės numerį.</span>
         </div>
         <div class="form-group">
-            <label for="expiryDate">Expiry Date:</label>
-            <input type="month" id="expiryDate" name="expiryDate" class="form-control" aria-label="Card Expiry Date">
+            <label for="expiryDate">Galiojimo data:</label>
+            <input type="month" id="expiryDate" name="expiryDate" class="form-control" aria-label="Galiojimo data">
             <span id="expiryDateError" style="color:red; display:none;">Prašome įvesti galiojimo datą.</span>
         </div>
         <div class="form-group">
             <label for="cvv">CVV:</label>
-            <input type="text" id="cvv" name="cvv" class="form-control" placeholder="CVV" aria-label="Card CVV">
+            <input type="text" id="cvv" name="cvv" class="form-control" placeholder="CVV" aria-label="CVV">
             <span id="cvvError" style="color:red; display:none;">Įveskite galiojantį CVV.</span>
         </div>
     </div>
 
-    <!-- PayPal Details -->
     <div id="paypalFields" style="display: none;">
-        <h4>PayPal Information</h4>
+        <h4>PayPal informacija</h4>
         <div class="form-group">
-            <input type="email" id="paypalEmail" name="paypalEmail" class="form-control" placeholder="PayPal Email" aria-label="PayPal Email">
+            <input type="email" id="paypalEmail" name="paypalEmail" class="form-control" placeholder="PayPal el. paštas" aria-label="PayPal el. paštas">
             <span id="paypalEmailError" style="color:red; display:none;">Prašome įvesti galiojantį PayPal el. paštą.</span>
         </div>
     </div>
 
-    <!-- Store Credit Details -->
     <div id="storeCreditFields" style="display: none;">
     </div>
 
-    <!-- Form to submit deletion -->
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-danger" id="deleteButton" />
-            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+            <input type="submit" value="Ištrinti" class="btn btn-danger" id="deleteButton" />
+            @Html.ActionLink("Atgal į sąrašą", "Index", null, new { @class = "btn btn-default" })
         </div>
     }
-</div>
 
-<script>
-    // Toggle visibility of payment method fields
+
+    <script>
     function togglePaymentFields() {
         var paymentType = document.getElementById("paymentType").value;
 
-        // Hide all payment sections first
         document.getElementById("cardFields").style.display = 'none';
         document.getElementById("paypalFields").style.display = 'none';
         document.getElementById("storeCreditFields").style.display = 'none';
 
-        // Show relevant section based on selection
         if (paymentType === "Credit Card") {
             document.getElementById("cardFields").style.display = 'block';
         } else if (paymentType === "PayPal") {
@@ -125,16 +117,13 @@
         }
     }
 
-    // Initialize the form with selected payment method
     document.addEventListener("DOMContentLoaded", function () {
-        togglePaymentFields();  // Run the function to set initial visibility
+        togglePaymentFields(); 
     });
 
-    // Validate form before submission
     document.getElementById("deleteButton").addEventListener("click", function(e) {
         e.preventDefault();
 
-        // Hide all error messages first
         document.getElementById("cardNumberError").style.display = 'none';
         document.getElementById("expiryDateError").style.display = 'none';
         document.getElementById("cvvError").style.display = 'none';
@@ -144,25 +133,21 @@
 
         var paymentType = document.getElementById("paymentType").value;
 
-        // Validation logic
         if (paymentType === "Credit Card") {
             var cardNumber = document.getElementById("cardNumber").value;
             var expiryDate = document.getElementById("expiryDate").value;
             var cvv = document.getElementById("cvv").value;
 
-            // Card number validation (simple example)
             if (!/^\d{16}$/.test(cardNumber)) {
                 document.getElementById("cardNumberError").style.display = 'block';
                 isValid = false;
             }
 
-            // Expiry date validation
             if (!expiryDate) {
                 document.getElementById("expiryDateError").style.display = 'block';
                 isValid = false;
             }
 
-            // CVV validation (3 digits)
             if (!/^\d{3}$/.test(cvv)) {
                 document.getElementById("cvvError").style.display = 'block';
                 isValid = false;
@@ -170,18 +155,16 @@
         } else if (paymentType === "PayPal") {
             var paypalEmail = document.getElementById("paypalEmail").value;
 
-            // PayPal email validation
+
             if (!/\S+\S+\.\S+/.test(paypalEmail)) {
                 document.getElementById("paypalEmailError").style.display = 'block';
                 isValid = false;
             }
-        } else if (paymentType === "Store Credit") {
-            var storeCreditAmount = document.getElementById("storeCreditAmountInput").value;
         }
 
-        // If validation passes, submit the form
+
         if (isValid) {
             document.querySelector("form").submit();
         }
     });
-</script>
+    </script>

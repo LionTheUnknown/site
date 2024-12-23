@@ -1,14 +1,14 @@
 ﻿@model WebApplication2.Models.Warehouse
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Ištrinti";
 }
 
-<h2>Delete</h2>
+<h2>Ištrinti sandėlį</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Ar tikrai norite ištrinti šį įrašą?</h3>
 <div>
-    <h4>Warehouse</h4>
+    <h4>Pasirinktas sandėlis</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -29,12 +29,13 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Ištrinti" class="btn btn-default" /> |
+            @Html.ActionLink("Grįžti į sąrašą", "Index")
         </div>
     }
 </div>
